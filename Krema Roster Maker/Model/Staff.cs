@@ -13,7 +13,7 @@ namespace Krema_Roster_Maker.Model
         public WorkType WorkType { get; set; }
 
         public List<Shift> Shifts { get; private set; } = new List<Shift>();
-        public Availability Availability { get; set; }
+        public Availability Availability { get; set; } = new Availability();
 
         public Staff(string name, Availability availability, Positions position, WorkType workType)
         {

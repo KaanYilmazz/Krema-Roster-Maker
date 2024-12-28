@@ -8,7 +8,7 @@ namespace Krema_Roster_Maker.Model
 {
     public class Availability
     {
-        private Dictionary<Days, (TimeOnly Start, TimeOnly End)> DayAvailability { get; set; } = new();
+        public Dictionary<Days, (TimeOnly Start, TimeOnly End)> DayAvailability { get; set; } = new();
 
         // Define availability for a specific day
         public void SetAvailability(Days day, TimeOnly startTime, TimeOnly endTime)
