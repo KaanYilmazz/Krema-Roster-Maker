@@ -115,9 +115,10 @@ namespace Krema_Roster_Maker
         {
             if (sender is Button button && button.DataContext is Staff staff)
             {
-                var modal = new EditStaffModal(staff);
-                modal.Visibility = Visibility.Visible;
-                 MainGrid.Children.Add(modal); // Assume RootGrid is your main container
+                
+                var modal = new EditStaffWindow(staff);
+                modal.Owner = MainWindow.GetWindow(this);
+                modal.ShowDialog();
             }
         }
     }

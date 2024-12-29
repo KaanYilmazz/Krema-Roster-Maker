@@ -1,19 +1,33 @@
 ﻿using Krema_Roster_Maker.Model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace Krema_Roster_Maker
 {
-    public partial class EditStaffModal : UserControl
+    /// <summary>
+    /// Interaction logic for EditStaffWindow.xaml
+    /// </summary>
+    public partial class EditStaffWindow : Window
     {
+
         public Staff SelectedStaff { get; set; }
 
-        public EditStaffModal(Staff staff)
+        public EditStaffWindow(Staff staff)
         {
-            InitializeComponent();
             SelectedStaff = staff;
+            DataContext = this;
+            InitializeComponent();
 
             // Bind availability to the ItemsControl
             AvailabilityItemsControl.ItemsSource = staff.Availability.DayAvailability.ToList();

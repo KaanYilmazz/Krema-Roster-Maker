@@ -1,7 +1,11 @@
-﻿<UserControl x:Class="Krema_Roster_Maker.EditStaffModal"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks">
+﻿<Window x:Class="Krema_Roster_Maker.EditStaffWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Krema_Roster_Maker"
+        mc:Ignorable="d"
+        Title="EditStaffWindow" Height="450" Width="800">
     <Border Background="White" Padding="20" CornerRadius="10" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid>
             <Grid.RowDefinitions>
@@ -58,4 +62,4 @@
             </StackPanel>
         </Grid>
     </Border>
-</UserControl>
+</Window>
