@@ -26,48 +26,22 @@ namespace Krema_Roster_Maker
         {
             InitializeComponent();
             ObservableCollection<Staff> members = new ObservableCollection<Staff>();
-            Availability example = new Availability();
-            example.SetAvailability(Days.Monday, new TimeOnly(6, 30), new TimeOnly(14, 00));
-            members.Add(new Staff("Romina",example , Positions.Manager, WorkType.FulTime));
-            members.Add(new Staff("Deniz", example, Positions.AssistantManager, WorkType.FulTime));
-            members.Add(new Staff("Sebo", example, Positions.HeadBarista, WorkType.FulTime));
+            var rominaAvailability = new Availability();
+            rominaAvailability.SetAvailability(Days.Monday,new TimeOnly(12, 0), new TimeOnly(23, 59));
+            rominaAvailability.SetAvailability(Days.Tuesday, false, true);
+            rominaAvailability.SetAvailability(Days.Wednesday, true, false);
+            rominaAvailability.SetAvailability(Days.Thursday, true, false);
+            rominaAvailability.SetAvailability(Days.Friday, true, false);
+            rominaAvailability.SetAvailability(Days.Saturday, true, false);
+            rominaAvailability.SetAvailability(Days.Sunday, true, false);
+            members.Add(new Staff("Romina", rominaAvailability, Positions.Manager, WorkType.FulTime));
+            members.Add(new Staff("Deniz", rominaAvailability, Positions.AssistantManager, WorkType.FulTime));
+            members.Add(new Staff("Sebo", rominaAvailability, Positions.HeadBarista, WorkType.FulTime));
 
 
             membersDataGrid.ItemsSource = members;
-            MockData();
         }
-        private void MockData()
-        {
-            //mock data
-            List<Shift> shifts = new List<Shift>();
-            List<Staff> staffList = new List<Staff>();
-            shifts.Add(new Shift(Days.Monday, new TimeOnly(6, 30), new TimeOnly(14, 00)));
-            shifts.Add(new Shift(Days.Monday, new TimeOnly(14, 00), new TimeOnly(18, 00)));
-            //shifts.Add(new Shift(Days.Monday, new TimeOnly(8,00) , new TimeOnly(16,00)));
-            //shifts.Add(new Shift(Days.Monday, new TimeOnly(11,00) , new TimeOnly(17,00)));
-            //shifts.Add(new Shift(Days.Monday, new TimeOnly(12,00) , new TimeOnly(17,00)));
 
-
-            var rominaAvailability = new Availability();
-            rominaAvailability.SetAvailability(Days.Monday, new TimeOnly(6, 0), new TimeOnly(18, 0));
-            var panosAvailability = new Availability();
-            panosAvailability.SetAvailability(Days.Monday, new TimeOnly(6, 0), new TimeOnly(14, 0));
-            var pinarAvailability = new Availability();
-            pinarAvailability.SetAvailability(Days.Monday, new TimeOnly(9, 0), new TimeOnly(23, 0));
-            var kaanAvailability = new Availability();
-            kaanAvailability.SetAvailability(Days.Monday, new TimeOnly(12, 0), new TimeOnly(23, 0));
-
-            var romina = new Staff("Romina", rominaAvailability, Positions.Manager, WorkType.FulTime);
-            var panos = new Staff("Panos", panosAvailability, Positions.HeadBarista, WorkType.FulTime);
-            //  var pinar = new Staff("Pinar", pinarAvailability, Positions.RegularStaff , WorkType.FulTime);
-            //  var kaan = new Staff("Kaan", kaanAvailability, Positions.RegularStaff , WorkType.PartTime);
-            staffList.Add(romina);
-            staffList.Add(panos);
-            // staffList.Add(pinar);
-            //  staffList.Add(kaan);
-
-            MakeRoster(shifts, staffList);
-        }
         private void MakeRoster(List<Shift> shifts, List<Staff> staffList)
         {
 

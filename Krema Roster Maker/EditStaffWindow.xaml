@@ -6,8 +6,12 @@
         xmlns:local="clr-namespace:Krema_Roster_Maker"
         mc:Ignorable="d"
         Title="EditStaffWindow" Height="450" Width="800">
-    <Border Background="White" Padding="20" CornerRadius="10" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Border Background="White" Padding="20" CornerRadius="10" Width="700" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -15,50 +19,108 @@
             </Grid.RowDefinitions>
 
             <!-- Modal Title -->
-            <TextBlock Text="Edit Staff Member" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0 0 0 20" />
+            <TextBlock Grid.ColumnSpan="2" Text="Edit Staff Member" FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0 0 0 20" />
 
-            <!-- Form Content -->
-            <StackPanel Grid.Row="1">
+            <!-- Left Section: Staff Info Form -->
+            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0 0 10 0">
                 <!-- Name -->
                 <TextBlock Text="Name" FontWeight="SemiBold" />
-                <TextBox x:Name="NameTextBox" Text="{Binding SelectedStaff.Name}" />
+                <TextBox x:Name="NameTextBox" Text="{Binding Name}" />
 
                 <!-- Position -->
-                <TextBlock Text="Position" FontWeight="SemiBold" />
-                <ComboBox x:Name="PositionComboBox" SelectedItem="{Binding SelectedStaff.Position}">
-                    <ComboBoxItem Content="Manager" />
-                    <ComboBoxItem Content="Assistant Manager" />
-                    <ComboBoxItem Content="Head Barista" />
-                    <ComboBoxItem Content="Regular Staff" />
-                </ComboBox>
+                <TextBlock Text="Position" FontWeight="SemiBold" Margin="0 10 0 0" />
+                <ComboBox x:Name="PositionComboBox" SelectedItem="{Binding Position}" />
 
                 <!-- Work Type -->
-                <TextBlock Text="Work Type" FontWeight="SemiBold" />
-                <ComboBox x:Name="WorkTypeComboBox" SelectedItem="{Binding SelectedStaff.WorkType}">
-                    <ComboBoxItem Content="FullTime" />
-                    <ComboBoxItem Content="PartTime" />
-                </ComboBox>
+                <TextBlock Text="Work Type" FontWeight="SemiBold" Margin="0 10 0 0" />
+                <ComboBox x:Name="WorkTypeComboBox" SelectedItem="{Binding WorkType}" />
+            </StackPanel>
 
-                <!-- Availability -->
-                <TextBlock Text="Availability" FontWeight="SemiBold" />
-                <ItemsControl x:Name="AvailabilityItemsControl">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0 5">
-                                <TextBlock Text="{Binding Key}" Width="100" />
-                                <TextBox Text="{Binding Value.Start}" Width="70" Margin="5,0" />
-                                <TextBlock Text="to" VerticalAlignment="Center" Margin="5,0" />
-                                <TextBox Text="{Binding Value.End}" Width="70" Margin="5,0" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+            <!-- Right Section: Availability -->
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="10 0 0 0">
+                <TextBlock Text="Availability" FontWeight="SemiBold" Margin="0 0 0 10" />
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="70" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Monday -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Monday" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="0" Grid.Column="1" Content="Fulltime" IsChecked="{Binding Availability.dayAvailabilityList[0].IsFullTime}" Margin="5" />
+                    <CheckBox Grid.Row="0" Grid.Column="2" Content="Off" IsChecked="{Binding Availability.dayAvailabilityList[0].IsOff}" Margin="5" />
+                    <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Availability.dayAvailabilityList[0].Start}" Width="60" Margin="5" />
+                    <TextBlock Grid.Row="0" Grid.Column="4" Text="to" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox Grid.Row="0" Grid.Column="5" Text="{Binding Availability.dayAvailabilityList[0].End}" Width="60" Margin="5" />
+                    
+                    <!-- Tuesday -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Tuesday" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Fulltime" IsChecked="{Binding Availability.dayAvailabilityList[1].IsFullTime}" Margin="5" />
+                    <CheckBox Grid.Row="1" Grid.Column="2" Content="Off" IsChecked="{Binding Availability.dayAvailabilityList[1].IsOff}" Margin="5" />
+                    <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Availability.dayAvailabilityList[1].Start}" Width="60" Margin="5" />
+                    <TextBlock Grid.Row="1" Grid.Column="4" Text="to" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding Availability.dayAvailabilityList[1].End}" Width="60" Margin="5" />
+
+                    <!-- Wednesday -->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Wednesday" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="2" Grid.Column="1" Content="Fulltime" IsChecked="{Binding Availability.dayAvailabilityList[2].IsFullTime}" Margin="5" />
+                    <CheckBox Grid.Row="2" Grid.Column="2" Content="Off" IsChecked="{Binding Availability.dayAvailabilityList[0].IsOff}" Margin="5" />
+                    <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Availability.dayAvailabilityList[2].Start}" Width="60" Margin="5" />
+                    <TextBlock Grid.Row="2" Grid.Column="4" Text="to" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox Grid.Row="2" Grid.Column="5" Text="{Binding Availability.dayAvailabilityList[2].End}" Width="60" Margin="5" />
+
+                    <!-- Thursday -->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Thursday" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="3" Grid.Column="1" Content="Fulltime" IsChecked="{Binding Availability.dayAvailabilityList[3].IsFullTime}" Margin="5" />
+                    <CheckBox Grid.Row="3" Grid.Column="2" Content="Off" IsChecked="{Binding Availability.dayAvailabilityList[3].IsOff}" Margin="5" />
+                    <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding Availability.dayAvailabilityList[3].Start}" Width="60" Margin="5" />
+                    <TextBlock Grid.Row="3" Grid.Column="4" Text="to" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox Grid.Row="3" Grid.Column="5" Text="{Binding Availability.dayAvailabilityList[3].End}" Width="60" Margin="5" />
+
+                    <!-- Friday -->
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Friday" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="4" Grid.Column="1" Content="Fulltime" IsChecked="{Binding Availability.dayAvailabilityList[4].IsFullTime}" Margin="5" />
+                    <CheckBox Grid.Row="4" Grid.Column="2" Content="Off" IsChecked="{Binding Availability.dayAvailabilityList[0].IsOff}" Margin="5" />
+                    <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding Availability.dayAvailabilityList[4].Start}" Width="60" Margin="5" />
+                    <TextBlock Grid.Row="4" Grid.Column="4" Text="to" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox Grid.Row="4" Grid.Column="5" Text="{Binding Availability.dayAvailabilityList[4].End}" Width="60" Margin="5" />
+
+                    <!-- Saturday -->
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Saturday" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="5" Grid.Column="1" Content="Fulltime" IsChecked="{Binding Availability.dayAvailabilityList[5].IsFullTime}" Margin="5" />
+                    <CheckBox Grid.Row="5" Grid.Column="2" Content="Off" IsChecked="{Binding Availability.dayAvailabilityList[0].IsOff}" Margin="5" />
+                    <TextBox Grid.Row="5" Grid.Column="3" Text="{Binding Availability.dayAvailabilityList[5].Start}" Width="60" Margin="5" />
+                    <TextBlock Grid.Row="5" Grid.Column="4" Text="to" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox Grid.Row="5" Grid.Column="5" Text="{Binding Availability.dayAvailabilityList[5].End}" Width="60" Margin="5" />
+
+                    <!-- Sunday -->
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Sunday" VerticalAlignment="Center" />
+                    <CheckBox Grid.Row="6" Grid.Column="1" Content="Fulltime" IsChecked="{Binding Availability.dayAvailabilityList[6].IsFullTime}" Margin="5" />
+                    <CheckBox Grid.Row="6" Grid.Column="2" Content="Off" IsChecked="{Binding Availability.dayAvailabilityList[0].IsOff}" Margin="5" />
+                    <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding Availability.dayAvailabilityList[6].Start}" Width="60" Margin="5" />
+                    <TextBlock Grid.Row="6" Grid.Column="4" Text="to" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox Grid.Row="6" Grid.Column="5" Text="{Binding Availability.dayAvailabilityList[6].End}" Width="60" Margin="5" />
+
+                </Grid>
             </StackPanel>
 
             <!-- Action Buttons -->
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
-                <Button Content="Save" Width="100" Click="SaveButton_Click" />
-                <Button Content="Cancel" Width="100" Click="CancelButton_Click" />
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
+                <Button Content="Close" Width="100" Click="SaveButton_Click" />
             </StackPanel>
         </Grid>
     </Border>
