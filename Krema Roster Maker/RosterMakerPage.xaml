@@ -7,8 +7,39 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Border Background="White" Padding="20" CornerRadius="10" Width="700" HorizontalAlignment="Center" VerticalAlignment="Center">
-            
-        </Border>
+        <!-- Title and Header -->
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Weekly Roster" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+
+            <!-- Navigation Buttons for Week Selector -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="Previous Week" Width="120" Margin="5" />
+                <TextBlock Text="Week of: Jan 15 - Jan 21" FontSize="16" FontWeight="SemiBold" Margin="10"/>
+                <Button Content="Next Week" Width="120" Margin="5" />
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Main Roster Table -->
+        <DataGrid Name="RosterDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column" Margin="10,60,10,60">
+            <DataGrid.Columns>
+                <!-- Staff Name Column -->
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="100" />
+
+                <!-- Day Columns -->
+                <DataGridTextColumn Header="Monday" Binding="{Binding Shifts[0].ActualShift}" Width="85"/>
+                <DataGridTextColumn Header="Tuesday" Binding="{Binding Shifts[1].ActualShift}" Width="85"/>
+                <DataGridTextColumn Header="Wednesday" Binding="{Binding Shifts[2].ActualShift}" Width="85"/>
+                <DataGridTextColumn Header="Thursday" Binding="{Binding Shifts[3].ActualShift}" Width="85"/>
+                <DataGridTextColumn Header="Friday" Binding="{Binding Shifts[4].ActualShift}" Width="85"/>
+                <DataGridTextColumn Header="Saturday" Binding="{Binding Shifts[5].ActualShift}" Width="85"/>
+                <DataGridTextColumn Header="Sunday" Binding="{Binding Shifts[6].ActualShift}" Width="85"/>
+                <DataGridTextColumn Header="Actual Work" Binding="{Binding NetWork}" Width="90"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Footer with Additional Options -->
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Export to Excel" Width="120" Margin="10"/>
+        </StackPanel>
     </Grid>
 </UserControl>

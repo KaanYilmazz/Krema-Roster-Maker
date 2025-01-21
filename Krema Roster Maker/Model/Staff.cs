@@ -11,6 +11,19 @@ namespace Krema_Roster_Maker.Model
         public string Name { get; set; }
         public Positions Position { get; set; }
         public WorkType WorkType { get; set; }
+        public double NetWork
+        {
+            get
+            {
+                double temp = 0;
+                foreach (var item in Shifts)
+                {
+
+                    temp += item.ActualWork;
+                }
+                return temp;
+            }
+        }
 
         public List<Shift> Shifts { get; private set; } = new List<Shift>();
         public Availability Availability { get; set; } = new Availability();

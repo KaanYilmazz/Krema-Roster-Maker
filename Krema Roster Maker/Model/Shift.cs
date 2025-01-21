@@ -9,8 +9,19 @@ namespace Krema_Roster_Maker.Model
     public class Shift
     {
         public Days Day { get; set; }
+        public bool IsOff { get; set; }
         public TimeOnly StartTime { get; set; }
         public TimeOnly FinishTime { get; set; }
+        public string  ActualShift {
+            get
+            {
+               if (IsOff)
+                {
+                    return "OFF";
+                }
+                return StartTime.ToString()+" - " + FinishTime.ToString();
+            }
+             }
         public double ActualWork
         {
             get

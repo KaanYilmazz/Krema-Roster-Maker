@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Krema_Roster_Maker.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Krema_Roster_Maker
         public RosterMakerPage()
         {
             InitializeComponent();
+            
         }
     }
 }
