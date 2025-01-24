@@ -8,6 +8,7 @@ namespace Krema_Roster_Maker.Model
 {
     public class Shift
     {
+        public int? Id { get; set; }
         public Days Day { get; set; }
         public bool IsOff { get; set; }
         public TimeOnly StartTime { get; set; }

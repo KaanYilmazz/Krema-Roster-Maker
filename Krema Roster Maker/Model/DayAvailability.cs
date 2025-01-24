@@ -8,7 +8,7 @@ namespace Krema_Roster_Maker.Model
 {
     public class DayAvailability
     {
-
+        public int? Id { get; set; }
         public Days Day { get; set; }
         public bool IsFullTime { get; set; }
         public bool IsOff { get; set; }

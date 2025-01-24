@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using Krema_Roster_Maker.Context;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -9,6 +10,7 @@ namespace Krema_Roster_Maker
     /// </summary>
     public partial class App : Application
     {
+       
     }
 
 }

@@ -9,6 +9,7 @@ namespace Krema_Roster_Maker.Model
 {
     public class Availability
     {
+        public int? Id { get; set; }
         public List<DayAvailability> dayAvailabilityList { get; set; }
         //public ObservableCollection<DayAvailability> dayAvailabilityListOb { get; set; }
 

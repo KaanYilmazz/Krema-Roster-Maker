@@ -1,4 +1,6 @@
-﻿using Krema_Roster_Maker.Model;
+﻿using Krema_Roster_Maker.Context;
+using Krema_Roster_Maker.Helpers;
+using Krema_Roster_Maker.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,74 +27,37 @@ namespace Krema_Roster_Maker
         public StaffListPage()
         {
             InitializeComponent();
-            ObservableCollection<Staff> members = new ObservableCollection<Staff>();
-            var rominaAvailability = new Availability();
-            rominaAvailability.SetAvailability(Days.Monday,new TimeOnly(12, 0), new TimeOnly(23, 59));
-            rominaAvailability.SetAvailability(Days.Tuesday, false, true);
-            rominaAvailability.SetAvailability(Days.Wednesday, true, false);
-            rominaAvailability.SetAvailability(Days.Thursday, true, false);
-            rominaAvailability.SetAvailability(Days.Friday, true, false);
-            rominaAvailability.SetAvailability(Days.Saturday, true, false);
-            rominaAvailability.SetAvailability(Days.Sunday, true, false);
-            members.Add(new Staff("Romina", rominaAvailability, Positions.Manager, WorkType.FulTime));
-            members.Add(new Staff("Deniz", rominaAvailability, Positions.AssistantManager, WorkType.FulTime));
-            members.Add(new Staff("Sebo", rominaAvailability, Positions.HeadBarista, WorkType.FulTime));
-
-
-            membersDataGrid.ItemsSource = members;
+            var contextRepository = new JsonContextRepository("appContext.json");
+            membersDataGrid.ItemsSource = contextRepository.Context.Staffs;
         }
 
-        private void MakeRoster(List<Shift> shifts, List<Staff> staffList)
+        private void AddStaffButton_Click(object sender, RoutedEventArgs e)
         {
 
-
-            // Dictionary to store roster assignments
-            Dictionary<Shift, Staff> roster = new Dictionary<Shift, Staff>();
-
-            // Sort shifts by start time for logical assignment order
-            shifts.Sort((s1, s2) => s1.StartTime.CompareTo(s2.StartTime));
-
-            // Split staff into full-time and part-time groups
-            var fullTimeStaff = staffList.Where(s => s.WorkType == WorkType.FulTime).ToList();
-            var partTimeStaff = staffList.Where(s => s.WorkType == WorkType.PartTime).ToList();
-
-            // Assign shifts
-            foreach (var shift in shifts)
+            var modal = new EditStaffWindow();
+            modal.Owner = MainWindow.GetWindow(this);
+            var x = modal.ShowDialog();
+            if (x == true)
             {
-                // Find all staff available for this shift
-                var availableStaff = staffList
-                    .Where(staff => staff.IsAvailableForShift(shift))
-                    .OrderBy(staff => staff.Shifts.Count) // Balance workload
-                    .ToList();
-
-                // Assign to the first eligible staff member
-                Staff selectedStaff = availableStaff.FirstOrDefault();
-
-                if (selectedStaff != null)
-                {
-                    selectedStaff.Shifts.Add(shift);
-                    roster[shift] = selectedStaff;
-                }
-                else
-                {
-                    MessageBox.Show($"No available staff for shift: {shift.StartTime}");
-                }
+                var contextRepository = new JsonContextRepository("appContext.json");
+                membersDataGrid.ItemsSource = contextRepository.Context.Staffs;
             }
 
-            // Output the roster
-            foreach (var entry in roster)
-            {
-                MessageBox.Show($"Shift: {entry.Key.StartTime} -> Staff: {entry.Value.Name}");
-            }
         }
+
         private void EditStaffButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is Staff staff)
             {
-                
+
                 var modal = new EditStaffWindow(staff);
                 modal.Owner = MainWindow.GetWindow(this);
-                modal.ShowDialog();
+                var x = modal.ShowDialog();
+                if (x == true)
+                {
+                    var contextRepository = new JsonContextRepository("appContext.json");
+                    membersDataGrid.ItemsSource = contextRepository.Context.Staffs;
+                }
             }
         }
     }

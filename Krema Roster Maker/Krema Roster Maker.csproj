@@ -12,9 +12,11 @@
   <ItemGroup>
     <None Remove="images\FailteLogo.png" />
     <None Remove="images\unnamed.png" />
+    <None Remove="kremadb.db" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.1.0" />
   </ItemGroup>
 

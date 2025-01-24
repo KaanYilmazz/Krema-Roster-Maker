@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Krema_Roster_Maker.Model
 {
     public class Staff
     {
-        public string Name { get; set; }
+        public int? Id { get; set; }
+        public string? Name { get; set; }
         public Positions Position { get; set; }
         public WorkType WorkType { get; set; }
+       
+        public List<Shift> Shifts { get; private set; } = new List<Shift>();
+        public Availability Availability { get; set; } = new Availability();
         public double NetWork
         {
             get
@@ -24,10 +23,10 @@ namespace Krema_Roster_Maker.Model
                 return temp;
             }
         }
-
-        public List<Shift> Shifts { get; private set; } = new List<Shift>();
-        public Availability Availability { get; set; } = new Availability();
-
+        public Staff()
+        {
+               
+        }
         public Staff(string name, Availability availability, Positions position, WorkType workType)
         {
             Name = name;

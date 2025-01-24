@@ -1,17 +1,6 @@
-﻿using Krema_Roster_Maker.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Krema_Roster_Maker.Context;
+using Krema_Roster_Maker.Model;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Krema_Roster_Maker
 {
@@ -21,12 +10,22 @@ namespace Krema_Roster_Maker
     public partial class EditStaffWindow : Window
     {
 
-        public Staff SelectedStaff { get; set; }
+        public Staff? SelectedStaff { get; set; }
 
-        public EditStaffWindow(Staff staff)
+        public EditStaffWindow()
         {
             //SelectedStaff = staff;
-            DataContext = staff;
+            SelectedStaff = new Staff();
+            DataContext = SelectedStaff;
+            InitializeComponent();
+            PositionComboBox.ItemsSource = Enum.GetValues(typeof(Positions)).Cast<Positions>();
+            WorkTypeComboBox.ItemsSource = Enum.GetValues(typeof(WorkType)).Cast<WorkType>();
+
+        }
+        public EditStaffWindow(Staff staff)
+        {
+            SelectedStaff = staff;
+            DataContext = SelectedStaff;
             InitializeComponent();
             PositionComboBox.ItemsSource = Enum.GetValues(typeof(Positions)).Cast<Positions>();
             WorkTypeComboBox.ItemsSource = Enum.GetValues(typeof(WorkType)).Cast<WorkType>();
@@ -35,13 +34,39 @@ namespace Krema_Roster_Maker
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedStaff != null)
+            {
+                var contextRepository = new JsonContextRepository("appContext.json");
+                var editStaff = contextRepository.Context.Staffs.FirstOrDefault(x=>x.Id==SelectedStaff.Id);
+                if (editStaff != null)
+                {
+                    editStaff.Name = SelectedStaff.Name;
+                    editStaff.Position = SelectedStaff.Position;
+                   editStaff.WorkType = SelectedStaff.WorkType;
+                    editStaff.Availability = SelectedStaff.Availability;
+                    contextRepository.Save();
+                }
+                else
+                {
+                    contextRepository.Context.Staffs.Add(SelectedStaff);
+                    contextRepository.Save();
+                }
+                // Notify success and close modal
+                MessageBox.Show(SelectedStaff.Name + " added!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("No staff added!.", "Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
 
+            }
 
-            // Notify success and close modal
-            MessageBox.Show("Staff details updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             Visibility = Visibility.Collapsed; // Hide modal
-        }
+            this.DialogResult = true;
 
-   
+        }
     }
 }
+
+
+
+
